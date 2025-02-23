@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 import requests
@@ -19,8 +20,12 @@ options.add_argument("--headless")  # Run without opening the browser
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 
-driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+options = webdriver.ChromeOptions()
+options.add_argument("--headless")  # Run in headless mode (no UI)
 
+# ✅ Correct way to initialize Chrome WebDriver
+service = Service(ChromeDriverManager().install())  
+driver = webdriver.Chrome(service=service, options=options)
 def check_availability():
     try:
         driver.get(PRODUCT_URL)
