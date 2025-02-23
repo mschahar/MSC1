@@ -1,6 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 import time
 import requests
 
@@ -14,8 +16,13 @@ PINCODE = "305001"  # Change this to your desired pincode
 
 # 🔹 Initialize WebDriver
 options = webdriver.ChromeOptions()
-options.add_argument("--headless")  # Run without opening the browser
-driver = webdriver.Chrome(options=options)
+options.add_argument("--headless")  # Run in headless mode (no UI)
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
+
+# Use webdriver-manager to install the correct ChromeDriver
+service = Service(ChromeDriverManager().install())
+driver = webdriver.Chrome(service=service, options=options)
 
 def check_availability():
     try:
@@ -58,7 +65,5 @@ def send_telegram_message(message):
     else:
         print(f"⚠️ Failed to send message: {response.json()}")
 
-# 🔹 Run every 30 minutes
-while True:
-    check_availability()
-    time.sleep(1800)  # 30 minutes delay
+# 🔹 Run the script once (GitHub Actions will execute it every 30 minutes)
+check_availability()
