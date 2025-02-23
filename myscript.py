@@ -17,15 +17,9 @@ PINCODE = "305001"  # Change this to your desired pincode
 # 🔹 Initialize WebDriver
 options = webdriver.ChromeOptions()
 options.add_argument("--headless")  # Run without opening the browser
-options.add_argument("--no-sandbox")
-options.add_argument("--disable-dev-shm-usage")
-
-options = webdriver.ChromeOptions()
-options.add_argument("--headless")  # Run in headless mode (no UI)
-
-# ✅ Correct way to initialize Chrome WebDriver
-service = Service(ChromeDriverManager().install())  
+service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
+
 def check_availability():
     try:
         driver.get(PRODUCT_URL)
@@ -43,22 +37,19 @@ def check_availability():
 
         # 🔹 Get Stock Status from JavaScript
         stock_status = driver.execute_script("return ga4_dataset?.product?.stock_status;")
-        print(f"🔍 JavaScript Stock Status: {stock_status}")  # Debugging
-
-        # 🔹 Check if the product is available
-    if stock_status:
-        stock_status = stock_status.lower().strip()
-        print(f"🔍 Debug: Stock Status - {stock_status}")  # Debugging
         
-        if stock_status == "out_of_stock" or "out" in stock_status:
-            print("❌ Product is out of stock. No notification sent.")
-        elif stock_status == "in_stock" or "in" in stock_status:
-            send_telegram_message(f"✅ The product is now available! Buy here: {PRODUCT_URL}")
-        else:
-            print(f"⚠️ Unknown stock status: {stock_status}. No notification sent.")
-    else:
-        print("⚠️ Could not fetch stock status. No notification sent.")
+        if stock_status:
+            stock_status = stock_status.lower().strip()
+            print(f"🔍 Debug: Stock Status - {stock_status}")  # Debugging
 
+            if stock_status in ["out_of_stock", "oos", "out"]:
+                print("❌ Product is out of stock. No notification sent.")
+            elif stock_status in ["in_stock", "available", "in"]:
+                send_telegram_message(f"✅ The product is now available! Buy here: {PRODUCT_URL}")
+            else:
+                print(f"⚠️ Unknown stock status: {stock_status}. No notification sent.")
+        else:
+            print("⚠️ Could not fetch stock status. No notification sent.")
 
     except Exception as e:
         print(f"⚠️ Error: {e}")
@@ -76,5 +67,5 @@ def send_telegram_message(message):
     else:
         print(f"⚠️ Failed to send message: {response.json()}")
 
-# 🔹 Run script once (GitHub Actions will schedule it)
+# 🔹 Run every 30 minutes
 check_availability()
