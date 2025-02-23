@@ -46,18 +46,18 @@ def check_availability():
         print(f"🔍 JavaScript Stock Status: {stock_status}")  # Debugging
 
         # 🔹 Check if the product is available
-        if stock_status:
-    stock_status = stock_status.lower().strip()
-    print(f"🔍 Debug: Stock Status - {stock_status}")  # Debugging
-
-    if stock_status == "out_of_stock" or "out" in stock_status:
-        print("❌ Product is out of stock. No notification sent.")
-    elif stock_status == "in_stock" or "in" in stock_status:
-        send_telegram_message(f"✅ The product is now available! Buy here: {PRODUCT_URL}")
+    if stock_status:
+        stock_status = stock_status.lower().strip()
+        print(f"🔍 Debug: Stock Status - {stock_status}")  # Debugging
+        
+        if stock_status == "out_of_stock" or "out" in stock_status:
+            print("❌ Product is out of stock. No notification sent.")
+        elif stock_status == "in_stock" or "in" in stock_status:
+            send_telegram_message(f"✅ The product is now available! Buy here: {PRODUCT_URL}")
+        else:
+            print(f"⚠️ Unknown stock status: {stock_status}. No notification sent.")
     else:
-        print(f"⚠️ Unknown stock status: {stock_status}. No notification sent.")
-else:
-    print("⚠️ Could not fetch stock status. No notification sent.")
+        print("⚠️ Could not fetch stock status. No notification sent.")
 
 
     except Exception as e:
