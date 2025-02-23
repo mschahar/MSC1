@@ -10,10 +10,15 @@ CHAT_ID = "163447880"  # Replace with your chat ID
 
 # 🔹 Products & Pincode
 PRODUCTS = {
-    "LG Refrigerator": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201aseu/buy/",
-    "LG Washing Machine": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d211hbiz/buy/",
-    "LG TV": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d211hbcz/buy/",
-    "LG Air Conditioner": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-b199obey/buy/",
+    "LG TV LM56": "https://www.lg.com/in/tv-soundbars/smart-tvs/32lm563bptc/buy/",
+    "1st 185L 5S": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201ascu/buy/",
+    "2nd 185L 5S": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201abeu/buy/",
+    "3rd 185L 5S": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201aseu/buy/",
+    "4th 185L 5S": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201abcu/buy/",
+    "1st 185L 4s": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d199obey/",
+    "2nd 185L 4s": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d199osey/",
+    "3rd 185L 4s": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201ascy/buy/",
+    "4th 185L 4s": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201abcy/buy/",
 }
 PINCODE = "305001"  # Change this to your desired pincode
 
