@@ -9,7 +9,7 @@ TELEGRAM_BOT_TOKEN = "7607310655:AAEBc_-jzx47VRBLWjqm2sceyInZ_d-z5lg"  # Replace
 CHAT_ID = "163447880"  # Replace with your chat ID
 
 # 🔹 Product URL & Pincode
-PRODUCT_URL = "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d211hbcz/buy/"  # Change this
+PRODUCT_URL = "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201aseu/buy/"  # Change this
 PINCODE = "305001"  # Change this to your desired pincode
 
 # 🔹 Initialize WebDriver
