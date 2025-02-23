@@ -34,24 +34,28 @@ def check_availability(product_name, product_url):
             pincode_box.send_keys(PINCODE)
             pincode_box.send_keys(Keys.RETURN)  # Press Enter
             time.sleep(5)  # Wait for stock status to update
-        except Exception:
+        except:
             print(f"⚠️ {product_name}: Pincode input box not found! Skipping this step.")
+
+        # 🔹 Check for "Out of Stock" message directly on page
+        try:
+            out_of_stock_element = driver.find_element(By.XPATH, "//*[contains(text(), 'Sorry ! currently we are out of stock')]")
+            if out_of_stock_element:
+                message = f"❌ {product_name} is **OUT OF STOCK**."
+                send_telegram_message(message)
+                return  # Stop further processing for this product
+        except:
+            pass  # No out-of-stock message found, proceed to next check
 
         # 🔹 Get Stock Status from JavaScript
         stock_status = driver.execute_script("return ga4_dataset?.product?.stock_status;")
         print(f"🔍 {product_name} - JavaScript Stock Status: {stock_status}")  # Debugging
 
-        # 🔹 Check if the product is available
+        # 🔹 Check if product is available
         if stock_status and "in" in stock_status.lower():
             message = f"✅ {product_name} is **AVAILABLE**!\nBuy here: {product_url}"
         else:
-            # Check for Out of Stock text on webpage
-            try:
-                out_of_stock_element = driver.find_element(By.XPATH, "//*[contains(text(), 'Sorry ! currently we are out of stock')]")
-                if out_of_stock_element:
-                    message = f"❌ {product_name} is **OUT OF STOCK**."
-            except:
-                message = f"⚠️ {product_name} stock status could not be determined."
+            message = f"⚠️ {product_name} stock status could not be determined."
 
         send_telegram_message(message)
 
