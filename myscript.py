@@ -12,7 +12,7 @@ CHAT_ID = "163447880"  # Replace with your chat ID
 PRODUCTS = {
     "LG Refrigerator": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201aseu/buy/",
     "LG Washing Machine": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d211hbiz/buy/",
-    "LG TV": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d211hbcz/buy/f",
+    "LG TV": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d211hbcz/buy/",
     "LG Air Conditioner": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-b199obey/buy/",
 }
 PINCODE = "305001"  # Change this to your desired pincode
