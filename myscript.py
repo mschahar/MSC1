@@ -11,7 +11,7 @@ TELEGRAM_BOT_TOKEN = "7607310655:AAEBc_-jzx47VRBLWjqm2sceyInZ_d-z5lg"  # Replace
 CHAT_ID = "163447880"  # Replace with your chat ID
 
 # 🔹 Product URL & Pincode
-PRODUCT_URL = "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201aseu/buy/"  # Change this
+PRODUCT_URL = "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d211hbcz/buy/"  # Change this
 PINCODE = "305001"  # Change this to your desired pincode
 
 # 🔹 Initialize WebDriver
@@ -35,21 +35,28 @@ def check_availability():
         except Exception as e:
             print("⚠️ Pincode input box not found! Skipping this step.")
 
-        # 🔹 Get Stock Status from JavaScript
+        # 🔹 Try fetching stock status via JavaScript
         stock_status = driver.execute_script("return ga4_dataset?.product?.stock_status;")
-        
-        if stock_status:
-            stock_status = stock_status.lower().strip()
-            print(f"🔍 Debug: Stock Status - {stock_status}")  # Debugging
+        print(f"🔍 Debug: JavaScript Stock Status - {stock_status}")  # Debugging
 
-            if stock_status in ["out_of_stock", "oos", "out"]:
-                print("❌ Product is out of stock. No notification sent.")
-            elif stock_status in ["in_stock", "available", "in"]:
-                send_telegram_message(f"✅ The product is now available! Buy here: {PRODUCT_URL}")
-            else:
-                print(f"⚠️ Unknown stock status: {stock_status}. No notification sent.")
+        # 🔹 Backup Method: Extract stock status from page text
+        try:
+            stock_text_element = driver.find_element(By.CLASS_NAME, "stock-status")  # Update if needed
+            stock_text = stock_text_element.text.strip().lower()
+            print(f"🔍 Debug: Stock Status from Page - {stock_text}")
+        except:
+            stock_text = None
+            print("⚠️ Could not find stock status in page text.")
+
+        # 🔹 Determine Final Stock Status
+        final_status = (stock_status or stock_text or "").lower().strip()
+
+        if final_status in ["out_of_stock", "oos", "out", "currently unavailable", "not available"]:
+            print("❌ Product is out of stock. No notification sent.")
+        elif final_status in ["in_stock", "available", "in", "add to cart", "buy now"]:
+            send_telegram_message(f"✅ The product is now available! Buy here: {PRODUCT_URL}")
         else:
-            print("⚠️ Could not fetch stock status. No notification sent.")
+            print(f"⚠️ Unknown stock status: {final_status}. No notification sent.")
 
     except Exception as e:
         print(f"⚠️ Error: {e}")
@@ -67,5 +74,5 @@ def send_telegram_message(message):
     else:
         print(f"⚠️ Failed to send message: {response.json()}")
 
-# 🔹 Run every 30 minutes
+# 🔹 Run once
 check_availability()
