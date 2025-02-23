@@ -34,11 +34,12 @@ def check_availability():
         except Exception as e:
             print("⚠️ Pincode input box not found! Skipping this step.")
 
-        # 🔹 Get Page Source and Check for Out of Stock Message
+        # 🔹 Get Page Source and Check for Stock Status
         page_source = driver.page_source.lower()  # Convert to lowercase for consistency
 
         if "sorry ! currently we are out of stock" in page_source:
             print("❌ Product is OUT of stock.")
+            send_telegram_message(f"❌ The product is OUT of stock! Check here: {PRODUCT_URL}")
         else:
             print("✅ Product is IN STOCK! Sending notification...")
             send_telegram_message(f"✅ The product is now available! Buy here: {PRODUCT_URL}")
