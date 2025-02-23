@@ -1,13 +1,13 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from webdriver_manager.chrome import ChromeDriverManager
 import time
 import requests
-from webdriver_manager.chrome import ChromeDriverManager
 
 # 🔹 Telegram Bot Details
-TELEGRAM_BOT_TOKEN = "7607310655:AAEBc_-jzx47VRBLWjqm2sceyInZ_d-z5lg"  # Replace with your bot token
-CHAT_ID = "163447880"  # Replace with your chat ID
+TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN"  # Replace with your bot token
+CHAT_ID = "YOUR_CHAT_ID"  # Replace with your chat ID
 
 # 🔹 Product URL & Pincode
 PRODUCT_URL = "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d211hbcz/buy/"  # Change this
@@ -19,7 +19,7 @@ options.add_argument("--headless")  # Run without opening the browser
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 
-driver = webdriver.Chrome(options=options)  # ✅ Fixed issue
+driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 
 def check_availability():
     try:
@@ -33,27 +33,16 @@ def check_availability():
             pincode_box.send_keys(PINCODE)
             pincode_box.send_keys(Keys.RETURN)  # Press Enter
             time.sleep(5)  # Wait for stock status to update
-        except Exception:
+        except Exception as e:
             print("⚠️ Pincode input box not found! Skipping this step.")
 
         # 🔹 Get Stock Status from JavaScript
         stock_status = driver.execute_script("return ga4_dataset?.product?.stock_status;")
-        
-        # 🔹 Get Stock Message from HTML (Failsafe)
-        try:
-            stock_message_element = driver.find_element(By.CLASS_NAME, "stock-message")  # Change class if needed
-            stock_message = stock_message_element.text.strip().lower()
-        except Exception:
-            stock_message = ""
-
         print(f"🔍 JavaScript Stock Status: {stock_status}")  # Debugging
-        print(f"🔍 HTML Stock Message: {stock_message}")  # Debugging
 
         # 🔹 Check if the product is available
-        if stock_status and "in stock" in stock_status.lower():
+        if stock_status and "in" in stock_status.lower():
             send_telegram_message(f"✅ The product is now available! Buy here: {PRODUCT_URL}")
-        elif stock_message and "out of stock" in stock_message:
-            print("❌ Product is out of stock (HTML message).")
         else:
             print("❌ Product still out of stock.")
 
@@ -73,7 +62,5 @@ def send_telegram_message(message):
     else:
         print(f"⚠️ Failed to send message: {response.json()}")
 
-# 🔹 Run every 30 minutes
-while True:
-    check_availability()
-    time.sleep(1800)  # 30 minutes delay
+# 🔹 Run script once (GitHub Actions will schedule it)
+check_availability()
