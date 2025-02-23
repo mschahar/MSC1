@@ -15,8 +15,8 @@ PRODUCTS = {
     "2nd 185L 5S": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201abeu/buy/",
     "3rd 185L 5S": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201aseu/buy/",
     "4th 185L 5S": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201abcu/buy/",
-    "1st 185L 4s": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d199obey/",
-    "2nd 185L 4s": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d199osey/",
+    "1st 185L 4s": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d199obey/buy/",
+    "2nd 185L 4s": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d199osey/buy/",
     "3rd 185L 4s": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201ascy/buy/",
     "4th 185L 4s": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201abcy/buy/",
 }
