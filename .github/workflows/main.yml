@@ -21,6 +21,14 @@ jobs:
       run: |
       pip install -r requirements.txt
       pip install selenium  # Ensures Selenium is installed
+      - name: Install Chrome & ChromeDriver
+      run: |
+      sudo apt update
+      sudo apt install -y google-chrome-stable
+      wget https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip
+      unzip chromedriver_linux64.zip
+      sudo mv chromedriver /usr/bin/chromedriver
+
 
 
       - name: Run script
