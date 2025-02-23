@@ -10,7 +10,7 @@ TELEGRAM_BOT_TOKEN = "7607310655:AAEBc_-jzx47VRBLWjqm2sceyInZ_d-z5lg"  # Replace
 CHAT_ID = "163447880"  # Replace with your chat ID
 
 # 🔹 Product URL & Pincode
-PRODUCT_URL = "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201aseu/buy/"  # Change this
+PRODUCT_URL = "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d211hbcz/buy/"  # Change this
 PINCODE = "305001"  # Change this to your desired pincode
 
 # 🔹 Initialize WebDriver
@@ -19,7 +19,7 @@ options.add_argument("--headless")  # Run without opening the browser
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 
-driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+driver = webdriver.Chrome(options=options)  # ✅ Fixed issue
 
 def check_availability():
     try:
