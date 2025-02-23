@@ -17,8 +17,11 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install dependencies (if needed)
-        run: pip install -r requirements.txt || echo "No dependencies"
+      - name: Install dependencies
+      run: |
+      pip install -r requirements.txt
+      pip install selenium  # Ensures Selenium is installed
+
 
       - name: Run script
         run: python myscript.py
