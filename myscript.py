@@ -6,7 +6,7 @@ import requests
 
 # 🔹 Telegram Bot Details
 TELEGRAM_BOT_TOKEN = "7607310655:AAEBc_-jzx47VRBLWjqm2sceyInZ_d-z5lg"  # Replace with your bot token
-CHAT_IDS = ["163447880", "652473546"]  # Add multiple chat IDs here
+CHAT_IDS = ["163447880", "826574622"]  # Add multiple chat IDs here
 
 # 🔹 Products & Pincode
 PRODUCTS = {
