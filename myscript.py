@@ -63,6 +63,7 @@ def check_availability(product_name, product_url):
                     f"😞 *Oops!* 😞\n\n"
                     f"➡️ *{product_name}*\n\n"
                     f"❌ *Out Of Stock*.\n\n"
+                    f"👀 [Check]({product_url})\n\n"
                     f"📍 Pincode Checked: `{PINCODE}`"
                 )
                 send_telegram_message(message)
