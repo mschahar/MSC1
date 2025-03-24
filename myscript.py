@@ -10,7 +10,7 @@ CHAT_IDS = ["163447880", "826574622"]  # Add multiple chat IDs here
 
 # 🔹 Products & Pincode
 PRODUCTS = {
-    "🌟 LG 32" LM56 🌟": "https://www.lg.com/in/tv-soundbars/smart-tvs/32lm563bptc/buy/",
+    "🌟 LG 32 LM56 🌟": "https://www.lg.com/in/tv-soundbars/smart-tvs/32lm563bptc/buy/",
     "🏆 LG 185L GL-D201ASCU 🏆": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201ascu/buy/",
     "🏆 LG 185L GL-D201ABEU 🏆": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201abeu/buy/",
     "🏆 LG 185L GL-D201ASEU 🏆": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201aseu/buy/",
