@@ -80,13 +80,13 @@ def check_availability(product_name, product_url):
         if stock_status and "in" in stock_status.lower():
             message = (
                 f"🎉🔥 *Limited Time Deal!* 🔥🎉\n\n"
-                f"╭━━━━━━━━━━━━━━━━━━━━━━━━━━━╮\n"
-                f"🎯➡️ *{product_name}* 🟢🎁\n"
-                f"✅⏳ Now *AVAILABLE*! 🚀💸\n\n"
-                f"╰━━━━━━━━━━━━━━━━━━━━━━━━━━━╯\n\n"
-                f"🛒🤑 [Buy Now]({product_url})\n\n"
+                f"╭━━━━━━━━━━━━━━━━━━━━━━━━╮\n"
+                f"  🎯➡️ *{product_name}* 🟢🎁\n\n"
+                f"  ✅⏳ Now *AVAILABLE*! 🚀💸\n\n"
+                f"╰━━━━━━━━━━━━━━━━━━━━━━━━╯\n\n"
+                f"🛒🤑 [Buy Now]({product_url}) 💳🏃‍♂️\n\n"
                 f"📍📦 Pincode Checked: `{PINCODE}` 🎯📬\n\n"
-                f"🔗⚡️ [🏃‍♂️Link →]   {product_url}"
+                f"🔗⚡️ [Link →]   {product_url}"
             )
         else:
             message = (
