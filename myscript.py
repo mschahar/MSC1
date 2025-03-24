@@ -10,15 +10,15 @@ CHAT_IDS = ["163447880", "826574622"]  # Add multiple chat IDs here
 
 # 🔹 Products & Pincode
 PRODUCTS = {
-    "LG AC 5 Star": "https://www.lg.com/in/air-conditioners/split-air-conditioners/us-q19bnze/buy/",
-    "1st 185L 5S": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201ascu/buy/",
-    "2nd 185L 5S": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201abeu/buy/",
-    "3rd 185L 5S": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201aseu/buy/",
-    "4th 185L 5S": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201abcu/buy/",
-    "1st 185L 4s": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d199obey/buy/",
-    "2nd 185L 4s": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d199osey/buy/",
-    "3rd 185L 4s": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201ascy/buy/",
-    "4th 185L 4s": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201abcy/buy/",
+    "🌟 LG 32" LM56 🌟": "https://www.lg.com/in/tv-soundbars/smart-tvs/32lm563bptc/buy/",
+    "🏆 LG 185L GL-D201ASCU 🏆": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201ascu/buy/",
+    "🏆 LG 185L GL-D201ABEU 🏆": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201abeu/buy/",
+    "🏆 LG 185L GL-D201ASEU 🏆": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201aseu/buy/",
+    "🏆 LG 185L GL-D201ABCU 🏆": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201abcu/buy/",
+    "🔥 LG 185L GL-D199OBEY 🔥": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d199obey/buy/",
+    "🔥 LG 185L GL-D199OSEY 🔥": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d199osey/buy/",
+    "🔥 LG 185L GL-D201ASCY 🔥": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201ascy/buy/",
+    "🔥 LG 185L GL-D201ABCY 🔥": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201abcy/buy/",
 }
 PINCODE = "305001"  # Change this to your desired pincode
 
@@ -49,7 +49,7 @@ def check_availability(product_name, product_url):
             
             if unavailable_element:
                 message = (
-                    f"🚫 *Delivery Alert!* 🚫\n"
+                    f"🚫 *Delivery Alert!* 🚫\n\n"
                     f"⚠️ *{product_name}* - *Delivery is unavailable* for pincode `{PINCODE}`.\n\n"
                     f"❗ Please check an alternate pincode."
                 )
@@ -58,7 +58,7 @@ def check_availability(product_name, product_url):
 
             if out_of_stock_element:
                 message = (
-                    f"😞 *Oops!* 😞\n"
+                    f"😞 *Oops!* 😞\n\n"
                     f"❌ *{product_name}* is *OUT OF STOCK*.\n\n"
                     f"📍 Pincode Checked: `{PINCODE}`"
                 )
@@ -74,14 +74,14 @@ def check_availability(product_name, product_url):
         # 🔹 Check if product is available
         if stock_status and "in" in stock_status.lower():
             message = (
-                f"🎉 *Great News!* 🎉\n"
+                f"🎉 *Great News!* 🎉\n\n"
                 f"✅ *{product_name}* is now *AVAILABLE*!\n\n"
                 f"🛒 [Buy Now]({product_url})\n\n"
                 f"📍 Pincode Checked: `{PINCODE}`"
             )
         else:
             message = (
-                f"🤔 *Hmm...* 🤔\n"
+                f"🤔 *Hmm...* 🤔\n\n"
                 f"⚠️ *{product_name}* stock status is unclear.\n\n"
                 f"🔍 [Verify Here]({product_url})\n\n"
                 f"📍 Pincode Checked: `{PINCODE}`"
