@@ -51,7 +51,8 @@ def check_availability(product_name, product_url):
             if unavailable_element:
                 message = (
                     f"🚫 *Delivery Alert!* 🚫\n\n"
-                    f"⚠️ *{product_name}* - *Delivery is unavailable* for pincode `{PINCODE}`.\n\n"
+                    f"➡️ *{product_name}* \n\n"
+                    f"⚠️ - *Delivery is unavailable* for pincode `{PINCODE}`.\n\n"
                     f"❗ Please check an alternate pincode."
                 )
                 send_telegram_message(message)
@@ -60,7 +61,8 @@ def check_availability(product_name, product_url):
             if out_of_stock_element:
                 message = (
                     f"😞 *Oops!* 😞\n\n"
-                    f"❌ *{product_name}* is *Out Of Stock*.\n\n"
+                    f"➡️ *{product_name}*\n\n"
+                    f"❌ *Out Of Stock*.\n\n"
                     f"📍 Pincode Checked: `{PINCODE}`"
                 )
                 send_telegram_message(message)
@@ -76,14 +78,16 @@ def check_availability(product_name, product_url):
         if stock_status and "in" in stock_status.lower():
             message = (
                 f"🎉 *Great News!* 🎉\n\n"
-                f"✅ *{product_name}* is now *AVAILABLE*!\n\n"
+                f"➡️ *{product_name}*\n\n"
+                f"✅ Now *AVAILABLE*!\n\n"
                 f"🛒 [Buy Now]({product_url})\n\n"
                 f"📍 Pincode Checked: `{PINCODE}`"
             )
         else:
             message = (
                 f"🤔 *Hmm...* 🤔\n\n"
-                f"⚠️ *{product_name}* stock status is unclear.\n\n"
+                f"➡️ *{product_name}*\n\n"
+                f"⚠️ Stock status is unclear.\n\n"
                 f"🔍 [Verify Here]({product_url})\n\n"
                 f"📍 Pincode Checked: `{PINCODE}`"
             )
