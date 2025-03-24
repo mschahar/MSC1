@@ -47,8 +47,21 @@ def check_availability(product_name, product_url):
             unavailable_element = driver.find_elements(By.XPATH, "//*[contains(text(), 'Sorry ! Delivery is unavailable to your postcode')]")
             out_of_stock_element = driver.find_elements(By.XPATH, "//*[contains(text(), 'Sorry ! currently we are out of stock')]")
             
-            if unavailable_element or out_of_stock_element:
-                message = f"🚫 *{product_name}* is _OUT OF STOCK_ or _Delivery Unavailable_.\n⚡ [Check Status]({product_url})"
+            if unavailable_element:
+                message = (
+                    f"🚫 *Delivery Alert!* 🚫\n"
+                    f"⚠️ *{product_name}* - *Delivery is unavailable* for pincode `{PINCODE}`.\n\n"
+                    f"❗ Please check an alternate pincode."
+                )
+                send_telegram_message(message)
+                return  # Stop further processing for this product
+
+            if out_of_stock_element:
+                message = (
+                    f"😞 *Oops!* 😞\n"
+                    f"❌ *{product_name}* is *OUT OF STOCK*.\n\n"
+                    f"📍 Pincode Checked: `{PINCODE}`"
+                )
                 send_telegram_message(message)
                 return  # Stop further processing for this product
         except:
@@ -60,9 +73,19 @@ def check_availability(product_name, product_url):
 
         # 🔹 Check if product is available
         if stock_status and "in" in stock_status.lower():
-            message = f"🎉 *{product_name}* is now _AVAILABLE_!\n🛒 [Buy Now]({product_url})"
+            message = (
+                f"🎉 *Great News!* 🎉\n"
+                f"✅ *{product_name}* is now *AVAILABLE*!\n\n"
+                f"🛒 [Buy Now]({product_url})\n\n"
+                f"📍 Pincode Checked: `{PINCODE}`"
+            )
         else:
-            message = f"🤔 *{product_name}* stock status is _UNKNOWN_.\n🔍 [Verify Here]({product_url})"
+            message = (
+                f"🤔 *Hmm...* 🤔\n"
+                f"⚠️ *{product_name}* stock status is unclear.\n\n"
+                f"🔍 [Verify Here]({product_url})\n\n"
+                f"📍 Pincode Checked: `{PINCODE}`"
+            )
 
         send_telegram_message(message)
 
