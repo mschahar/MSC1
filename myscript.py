@@ -10,15 +10,15 @@ CHAT_IDS = ["163447880", "826574622"]  # Add multiple chat IDs here
 
 # 🔹 Products & Pincode
 PRODUCTS = {
-    "🌟 LG 32 LM56 🌟": "https://www.lg.com/in/tv-soundbars/smart-tvs/32lm563bptc/buy/",
-    "🏆 LG 185L GL-D201ASCU 🏆": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201ascu/buy/",
-    "🏆 LG 185L GL-D201ABEU 🏆": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201abeu/buy/",
-    "🏆 LG 185L GL-D201ASEU 🏆": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201aseu/buy/",
-    "🏆 LG 185L GL-D201ABCU 🏆": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201abcu/buy/",
-    "🔥 LG 185L GL-D199OBEY 🔥": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d199obey/buy/",
-    "🔥 LG 185L GL-D199OSEY 🔥": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d199osey/buy/",
-    "🔥 LG 185L GL-D201ASCY 🔥": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201ascy/buy/",
-    "🔥 LG 185L GL-D201ABCY 🔥": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201abcy/buy/",
+    " LG 32 LM56 📺": "https://www.lg.com/in/tv-soundbars/smart-tvs/32lm563bptc/buy/",
+    " LG 185L GL-D201ASCU 5️⃣⭐️": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201ascu/buy/",
+    " LG 185L GL-D201ABEU 5️⃣⭐️": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201abeu/buy/",
+    " LG 185L GL-D201ASEU 5️⃣⭐️": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201aseu/buy/",
+    " LG 185L GL-D201ABCU 5️⃣⭐️": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201abcu/buy/",
+    " LG 185L GL-D199OBEY 4️⃣⭐️": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d199obey/buy/",
+    " LG 185L GL-D199OSEY 4️⃣⭐️": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d199osey/buy/",
+    " LG 185L GL-D201ASCY 4️⃣⭐️": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201ascy/buy/",
+    " LG 185L GL-D201ABCY 4️⃣⭐️": "https://www.lg.com/in/refrigerators/single-door-refrigerators/gl-d201abcy/buy/",
 }
 PINCODE = "305001"  # Change this to your desired pincode
 
@@ -59,7 +59,7 @@ def check_availability(product_name, product_url):
             if out_of_stock_element:
                 message = (
                     f"😞 *Oops!* 😞\n\n"
-                    f"❌ *{product_name}* is *OUT OF STOCK*.\n\n"
+                    f"❌ *{product_name}* is *Out Of Stock*.\n\n"
                     f"📍 Pincode Checked: `{PINCODE}`"
                 )
                 send_telegram_message(message)
