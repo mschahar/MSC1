@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 import requests
 
-# 🔹 Telegram Details (Keep your tokens)
+# 🔹 Telegram Details
 TELEGRAM_BOT_TOKEN = "7607310655:AAEBc_-jzx47VRBLWjqm2sceyInZ_d-z5lg"
 CHAT_IDS = ["163447880", "826574622"]
 
@@ -17,11 +17,10 @@ PINCODE = "305001"
 
 # 🔹 Setup Chrome with Stealth Arguments
 options = webdriver.ChromeOptions()
-options.add_argument("--headless=new") # Faster, modern headless mode
+options.add_argument("--headless=new") 
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 options.add_argument("--window-size=1920,1080")
-# Hides the "Automation" flag
 options.add_experimental_option("excludeSwitches", ["enable-automation"])
 options.add_experimental_option('useAutomationExtension', False)
 options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36")
@@ -41,17 +40,15 @@ def check_availability(product_name, product_url):
             pincode_box.send_keys(PINCODE)
             pincode_box.send_keys(Keys.RETURN)
             
-            # CRITICAL: Wait for the UI to refresh after entering pincode
+            # Wait for the UI to refresh after entering pincode
             time.sleep(7) 
         except Exception as e:
             print(f"⚠️ Pincode box issue: {e}")
 
         # 2. Check for "Out of Stock" or "Delivery Unavailable" via UI Text
-        # We look for the specific error messages LG shows in the 'pincode-status' area
         page_source = driver.page_source.lower()
         
-        # Define failure indicators
-        out_of_stock_messages = [
+        failure_indicators = [
             "currently we are out of stock",
             "delivery is unavailable to your postcode",
             "not deliverable",
@@ -59,48 +56,50 @@ def check_availability(product_name, product_url):
         ]
 
         is_actually_available = True
-        for msg in out_of_stock_messages:
+        found_msg = ""
+        
+        for msg in failure_indicators:
             if msg in page_source:
                 print(f"❌ {product_name}: Found failure message: '{msg}'")
                 is_actually_available = False
+                found_msg = msg
                 break
 
         # 3. Double check the "Buy Now" button
-        try:
-            # If the button is 'disabled' or has 'out-of-stock' class
-            buy_now_btn = driver.find_element(By.CSS_SELECTOR, ".buy-now, .add-to-cart")
-            if "disabled" in buy_now_btn.get_attribute("class") or not buy_now_btn.is_enabled():
+        if is_actually_available:
+            try:
+                buy_now_btn = driver.find_element(By.CSS_SELECTOR, ".buy-now, .add-to-cart")
+                if "disabled" in buy_now_btn.get_attribute("class") or not buy_now_btn.is_enabled():
+                    is_actually_available = False
+            except:
                 is_actually_available = False
-        except:
-            # If button isn't even found, it's likely OOS
-            is_actually_available = False
 
-        # 4. Final Verdict
+        # 4. Final Verdict & Notification
         if is_actually_available:
             message = f"🎉 *{product_name}* is AVAILABLE for `{PINCODE}`!\n[Buy Now]({product_url})"
-            send_telegram_message(message)
         else:
-            # OPTIONAL: Send a message even if it's out of stock
-            # Remove the '#' below if you want "Out of Stock" notifications
-            # message = f"ℹ️ *{product_name}* is still Out of Stock for `{PINCODE}`."
-             send_telegram_message(message)
-            
+            message = f"ℹ️ *{product_name}* is currently Out of Stock for `{PINCODE}`."
             print(f"ℹ️ {product_name} is confirmed OUT of stock for {PINCODE}.")
+
+        # Send the notification (This runs for both In Stock and Out of Stock now)
+        send_telegram_message(message)
 
     except Exception as e:
         print(f"⚠️ Error: {e}")
 
 def send_telegram_message(message):
     for chat_id in CHAT_IDS:
-        url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
-        payload = {"chat_id": chat_id, "text": message, "parse_mode": "Markdown"}
-        requests.post(url, data=payload)
+        try:
+            url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+            payload = {"chat_id": chat_id, "text": message, "parse_mode": "Markdown"}
+            r = requests.post(url, data=payload)
+            if r.status_code != 200:
+                print(f"⚠️ Telegram API Error: {r.text}")
+        except Exception as e:
+            print(f"⚠️ Failed to reach Telegram: {e}")
 
 # Execution
 for name, url in PRODUCTS.items():
     check_availability(name, url)
 
 driver.quit()
-
-
-
