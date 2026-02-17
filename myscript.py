@@ -32,7 +32,7 @@ driver = webdriver.Chrome(options=options)
 def check_availability(product_name, product_url):
     try:
         driver.get(product_url)
-        time.sleep(5)  # Wait for page to load completely
+        time.sleep(10)  # Wait for page to load completely
 
         # 🔹 Enter Pincode
         try:
@@ -123,4 +123,5 @@ for name, url in PRODUCTS.items():
     check_availability(name, url)
 
 driver.quit()  # Close the browser session
+
 
