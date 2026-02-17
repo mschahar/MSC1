@@ -82,7 +82,7 @@ def check_availability(product_name, product_url):
         else:
             # OPTIONAL: Send a message even if it's out of stock
             # Remove the '#' below if you want "Out of Stock" notifications
-             message = f"ℹ️ *{product_name}* is still Out of Stock for `{PINCODE}`."
+            # message = f"ℹ️ *{product_name}* is still Out of Stock for `{PINCODE}`."
              send_telegram_message(message)
             
             print(f"ℹ️ {product_name} is confirmed OUT of stock for {PINCODE}.")
@@ -101,5 +101,6 @@ for name, url in PRODUCTS.items():
     check_availability(name, url)
 
 driver.quit()
+
 
 
