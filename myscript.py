@@ -12,7 +12,6 @@ CHAT_IDS = ["163447880", "826574622"]
 
 PRODUCTS = {
     " LG 32 LR57 📺": "https://www.lg.com/in/tv-soundbars/smart-tvs/32lr570b6la/buy/",
-    " LG WM Semi 7KG🗄️": "https://www.lg.com/in/laundry/semi-automatic-washing-machines/p7020ngaz/buy/",
 }
 PINCODE = "305001"
 
@@ -104,5 +103,6 @@ for name, url in PRODUCTS.items():
     check_availability(name, url)
 
 driver.quit()
+
 
 
