@@ -31,46 +31,59 @@ driver = webdriver.Chrome(options=options)
 def check_availability(product_name, product_url):
     try:
         driver.get(product_url)
-        wait = WebDriverWait(driver, 20) # Wait up to 20 seconds
+        wait = WebDriverWait(driver, 25)
 
-        # 🔹 Enter Pincode
+        # 1. Enter Pincode
         try:
-            # Wait for pincode box to be clickable
             pincode_box = wait.until(EC.element_to_be_clickable((By.ID, "product-pincode-01")))
-            pincode_box.click() # Click first to focus
+            pincode_box.click()
             pincode_box.clear()
             pincode_box.send_keys(PINCODE)
             pincode_box.send_keys(Keys.RETURN)
             
-            # Wait for the price or stock status to refresh after pincode
-            time.sleep(5) 
+            # CRITICAL: Wait for the UI to refresh after entering pincode
+            time.sleep(7) 
         except Exception as e:
-            print(f"⚠️ {product_name}: Pincode Error: {e}")
+            print(f"⚠️ Pincode box issue: {e}")
 
-        # 🔹 JavaScript Check (LG's internal data layer)
-        # We wrap this in a try-block because ga4_dataset might not load immediately
+        # 2. Check for "Out of Stock" or "Delivery Unavailable" via UI Text
+        # We look for the specific error messages LG shows in the 'pincode-status' area
+        page_source = driver.page_source.lower()
+        
+        # Define failure indicators
+        out_of_stock_messages = [
+            "currently we are out of stock",
+            "delivery is unavailable to your postcode",
+            "not deliverable",
+            "sold out"
+        ]
+
+        is_actually_available = True
+        for msg in out_of_stock_messages:
+            if msg in page_source:
+                print(f"❌ {product_name}: Found failure message: '{msg}'")
+                is_actually_available = False
+                break
+
+        # 3. Double check the "Buy Now" button
         try:
-            stock_status = driver.execute_script("return ga4_dataset?.product?.stock_status;")
-            print(f"🔍 {product_name} Status: {stock_status}")
+            # If the button is 'disabled' or has 'out-of-stock' class
+            buy_now_btn = driver.find_element(By.CSS_SELECTOR, ".buy-now, .add-to-cart")
+            if "disabled" in buy_now_btn.get_attribute("class") or not buy_now_btn.is_enabled():
+                is_actually_available = False
         except:
-            stock_status = "unknown"
+            # If button isn't even found, it's likely OOS
+            is_actually_available = False
 
-        # 🔹 Logic Check
-        if stock_status and "in" in stock_status.lower():
-            message = f"🎉 *{product_name}* is IN STOCK for `{PINCODE}`!\n[Buy Now]({product_url})"
+        # 4. Final Verdict
+        if is_actually_available:
+            message = f"🎉 *{product_name}* is AVAILABLE for `{PINCODE}`!\n[Buy Now]({product_url})"
             send_telegram_message(message)
-        elif "out" in str(stock_status).lower():
-            print(f"❌ {product_name} is Out of Stock.")
         else:
-            # Fallback: Check for visual "Out of Stock" text
-            body_text = driver.find_element(By.TAG_NAME, "body").text
-            if "out of stock" in body_text.lower():
-                print(f"❌ {product_name} confirmed Out of Stock via text.")
-            else:
-                send_telegram_message(f"❓ Status Unclear for {product_name}. Check link: {product_url}")
+            print(f"ℹ️ {product_name} is confirmed OUT of stock for {PINCODE}.")
 
     except Exception as e:
-        print(f"⚠️ Error checking {product_name}: {e}")
+        print(f"⚠️ Error: {e}")
 
 def send_telegram_message(message):
     for chat_id in CHAT_IDS:
@@ -83,3 +96,4 @@ for name, url in PRODUCTS.items():
     check_availability(name, url)
 
 driver.quit()
+
